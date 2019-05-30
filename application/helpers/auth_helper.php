@@ -1,14 +1,12 @@
 <?php
 defined('BASEPATH') OR die('No direct script access allowed!');
 
-$CI =& get_instance();
-
 function is_login($is_true = false)
 {
-    global $CI;
-    if (!@$CI->session->is_login && !$is_match) {
+    $CI =& get_instance();
+    if (!$CI->session->is_login && !$is_true) {
         redirect('auth/');
-    } elseif ($CI->session->is_login && $is_match) {
+    } elseif ($CI->session->is_login && $is_true) {
         redirect('dashboard');
     }
 
@@ -17,7 +15,7 @@ function is_login($is_true = false)
 
 function is_level($level)
 {
-    global $CI;
+    $CI =& get_instance();
     if ($CI->session->level == $level) {
         return true;
     }
@@ -27,7 +25,7 @@ function is_level($level)
 
 function redirect_if_level_not($level)
 {
-    global $CI;
+    $CI =& get_instance();
     $is_match = false;
     if (is_array($level)) {
         foreach ($level as $l) {

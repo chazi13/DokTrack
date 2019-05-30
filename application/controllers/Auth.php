@@ -26,6 +26,7 @@ class Auth extends CI_Controller
             $verify_password = password_verify($password, $user_data->password);
             if ($verify_password) {
                 $this->set_session($user_data);
+                echo json_encode($this->session->userdata());
                 redirect('dashboard');
             } else {
                 $this->error('Login gagal! <br>Password tidak sesuai');
@@ -34,7 +35,7 @@ class Auth extends CI_Controller
             $this->error('Login gagal! <br>User tidak ditemukan');
         }
 
-        redirect('auth/');
+        // redirect('auth/');
     }
 
     private function set_session($user_data)
@@ -43,10 +44,11 @@ class Auth extends CI_Controller
            'user_id' => $user_data->user_id,
            'nama' => $user_data->nama,
            'username' => $user_data->username,
+           'level' => $user_data->level,
            'is_login' => true
         ]);
 
-        $this->session->set_flashdata('success', 'Selamat Datang ' . $user_data->name);
+        $this->session->set_flashdata('success', 'Selamat Datang ' . $user_data->nama);
     }
 
     private function error($msg)
